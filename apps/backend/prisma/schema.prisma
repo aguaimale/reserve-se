@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id            String   @id @default(uuid()) @db.Uuid
+  name          String
+  slug          String   @unique
+  brand_primary String?
+  brand_logo    String?
+  currency      String   @default("ARS")
+  timezone      String   @default("America/Argentina/Buenos_Aires")
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  // Relations
+  users      User[]
+  room_types RoomType[]
+  rate_plans RatePlan[]
+  inventory  Inventory[]
+  bookings   Booking[]
+  api_keys   ApiKey[]
+
+  @@map("tenants")
+}
+
+model User {
+  id         String   @id @default(uuid()) @db.Uuid
+  tenant_id  String   @db.Uuid
+  email      String
+  password   String
+  name       String?
+  role       String   @default("manager")
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relations
+  tenant Tenant @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+
+  @@unique([tenant_id, email])
+  @@map("users")
+}
+
+model RoomType {
+  id          String   @id @default(uuid()) @db.Uuid
+  tenant_id   String   @db.Uuid
+  name        String
+  description String?
+  max_guests  Int      @default(2)
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  // Relations
+  tenant    Tenant      @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+  inventory Inventory[]
+  bookings  Booking[]
+
+  @@map("room_types")
+}
+
+model RatePlan {
+  id               String   @id @default(uuid()) @db.Uuid
+  tenant_id        String   @db.Uuid
+  name             String
+  description      String?
+  is_refundable    Boolean  @default(true)
+  cancellation_hrs Int      @default(24)
+  is_active        Boolean  @default(true)
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  // Relations
+  tenant    Tenant      @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+  inventory Inventory[]
+  bookings  Booking[]
+
+  @@map("rate_plans")
+}
+
+model Inventory {
+  id           String   @id @default(uuid()) @db.Uuid
+  tenant_id    String   @db.Uuid
+  room_type_id String   @db.Uuid
+  rate_plan_id String   @db.Uuid
+  date         DateTime @db.Date
+  allotment    Int      @default(0)
+  price_cents  Int      @default(0)
+  min_stay     Int      @default(1)
+  max_stay     Int      @default(30)
+  is_closed    Boolean  @default(false)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  // Relations
+  tenant    Tenant   @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+  room_type RoomType @relation(fields: [room_type_id], references: [id], onDelete: Cascade)
+  rate_plan RatePlan @relation(fields: [rate_plan_id], references: [id], onDelete: Cascade)
+
+  @@unique([tenant_id, room_type_id, rate_plan_id, date])
+  @@map("inventory")
+}
+
+model Booking {
+  id             String   @id @default(uuid()) @db.Uuid
+  tenant_id      String   @db.Uuid
+  room_type_id   String   @db.Uuid
+  rate_plan_id   String   @db.Uuid
+  locator        String   @unique
+  status         String   @default("confirmed") // confirmed, cancelled
+  checkin        DateTime @db.Date
+  checkout       DateTime @db.Date
+  guests         Int      @default(1)
+  total_cents    Int      @default(0)
+  currency       String   @default("ARS")
+  customer_name  String
+  customer_email String
+  customer_phone String?
+  notes          String?
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  // Relations
+  tenant    Tenant   @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+  room_type RoomType @relation(fields: [room_type_id], references: [id], onDelete: Cascade)
+  rate_plan RatePlan @relation(fields: [rate_plan_id], references: [id], onDelete: Cascade)
+
+  @@map("bookings")
+}
+
+model ApiKey {
+  id         String   @id @default(uuid()) @db.Uuid
+  tenant_id  String   @db.Uuid
+  name       String
+  key        String   @unique
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relations
+  tenant Tenant @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+
+  @@map("api_keys")
+}
