@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Booking Widget - Ejemplo de Integración</title>
+      <style>
+         /* Estilos básicos para la página de ejemplo */
+         body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+         }
+
+         .header {
+            background-color: #1f2937;
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+         }
+
+         .header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+         }
+
+         .header p {
+            margin: 0;
+            opacity: 0.8;
+         }
+
+         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+         }
+
+         .demo-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         }
+
+         .demo-section h2 {
+            margin: 0 0 1rem 0;
+            color: #1f2937;
+         }
+
+         .demo-section p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+         }
+
+         .widget-container {
+            display: flex;
+            justify-content: center;
+            padding: 2rem 0;
+         }
+
+         .code-block {
+            background-color: #1f2937;
+            color: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+         }
+
+         .color-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+         }
+
+         .color-option {
+            text-align: center;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+         }
+
+         .color-option:hover {
+            border-color: #3b82f6;
+         }
+
+         .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+         }
+
+         .footer {
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+         }
+
+         /* Responsive */
+         @media (max-width: 768px) {
+            .container {
+               padding: 1rem;
+            }
+
+            .demo-section {
+               padding: 1rem;
+            }
+         }
+      </style>
+   </head>
+   <body>
+      <header class="header">
+         <h1>🏨 Booking Widget</h1>
+         <p>Widget embebible para reservas de hotel - Ejemplo de integración</p>
+      </header>
+
+      <div class="container">
+         <!-- Demo principal -->
+         <section class="demo-section">
+            <h2>Widget de Reservas</h2>
+            <p>
+               Este es un ejemplo de cómo integrar el widget de reservas en tu
+               sitio web. El widget se conecta automáticamente con el backend
+               local en desarrollo.
+            </p>
+
+            <div class="widget-container">
+               <!-- Aquí se monta el widget -->
+               <div id="booking-widget"></div>
+            </div>
+         </section>
+
+         <!-- Instrucciones de integración -->
+         <section class="demo-section">
+            <h2>📋 Cómo integrar</h2>
+            <p>Para integrar el widget en tu sitio web, sigue estos pasos:</p>
+
+            <h3>1. Incluir el script</h3>
+            <div class="code-block">
+               &lt;script src="https://tu-dominio.com/dist/booking-widget.js"
+               data-tenant="hotel-luna" data-language="es"
+               data-primary="#0EA5E9"&gt;&lt;/script&gt;
+            </div>
+
+            <h3>2. Crear el contenedor</h3>
+            <div class="code-block">
+               &lt;div id="booking-widget"&gt;&lt;/div&gt;
+            </div>
+
+            <h3>3. Inicializar el widget</h3>
+            <div class="code-block">
+               &lt;script&gt; BookingWidget.mountWidget('#booking-widget', { //
+               Opciones adicionales (opcional) }) &lt;/script&gt;
+            </div>
+         </section>
+
+         <!-- Configuración de colores -->
+         <section class="demo-section">
+            <h2>🎨 Personalización de colores</h2>
+            <p>
+               Puedes personalizar el color primario del widget usando el
+               atributo <code>data-primary</code>:
+            </p>
+
+            <div class="color-demo">
+               <div class="color-option" onclick="changeColor('#0EA5E9')">
+                  <div
+                     class="color-preview"
+                     style="background-color: #0ea5e9"
+                  ></div>
+                  <div>Azul (por defecto)</div>
+                  <small>#0EA5E9</small>
+               </div>
+               <div class="color-option" onclick="changeColor('#059669')">
+                  <div
+                     class="color-preview"
+                     style="background-color: #059669"
+                  ></div>
+                  <div>Verde</div>
+                  <small>#059669</small>
+               </div>
+               <div class="color-option" onclick="changeColor('#DC2626')">
+                  <div
+                     class="color-preview"
+                     style="background-color: #dc2626"
+                  ></div>
+                  <div>Rojo</div>
+                  <small>#DC2626</small>
+               </div>
+               <div class="color-option" onclick="changeColor('#7C3AED')">
+                  <div
+                     class="color-preview"
+                     style="background-color: #7c3aed"
+                  ></div>
+                  <div>Púrpura</div>
+                  <small>#7C3AED</small>
+               </div>
+               <div class="color-option" onclick="changeColor('#EA580C')">
+                  <div
+                     class="color-preview"
+                     style="background-color: #ea580c"
+                  ></div>
+                  <div>Naranja</div>
+                  <small>#EA580C</small>
+               </div>
+               <div class="color-option" onclick="changeColor('#1F2937')">
+                  <div
+                     class="color-preview"
+                     style="background-color: #1f2937"
+                  ></div>
+                  <div>Gris oscuro</div>
+                  <small>#1F2937</small>
+               </div>
+            </div>
+         </section>
+
+         <!-- Información técnica -->
+         <section class="demo-section">
+            <h2>⚙️ Configuración técnica</h2>
+
+            <h3>Parámetros disponibles</h3>
+            <ul>
+               <li>
+                  <strong>data-tenant:</strong> Identificador del hotel/tenant
+               </li>
+               <li>
+                  <strong>data-language:</strong> Idioma del widget (es, en)
+               </li>
+               <li>
+                  <strong>data-primary:</strong> Color primario en formato hex
+               </li>
+            </ul>
+
+            <h3>API Endpoints utilizados</h3>
+            <ul>
+               <li>
+                  <strong>GET /api/v1/tenants/{tenant}/config</strong> -
+                  Configuración del tenant
+               </li>
+               <li>
+                  <strong>GET /api/v1/availability</strong> - Búsqueda de
+                  disponibilidad
+               </li>
+               <li>
+                  <strong>POST /api/v1/bookings/confirm</strong> - Confirmación
+                  de reserva
+               </li>
+            </ul>
+
+            <h3>Navegadores soportados</h3>
+            <ul>
+               <li>Chrome 80+</li>
+               <li>Firefox 75+</li>
+               <li>Safari 13+</li>
+               <li>Edge 80+</li>
+            </ul>
+         </section>
+      </div>
+
+      <footer class="footer">
+         <p>&copy; 2024 Reserve-se - Sistema de reservas hoteleras</p>
+         <p>
+            <a
+               href="https://github.com/aguaimale/reserve-se"
+               style="color: #60a5fa"
+            >
+               Ver código en GitHub
+            </a>
+         </p>
+      </footer>
+
+      <!-- Cargar estilos del widget -->
+      <link rel="stylesheet" href="../dist/style.css" />
+
+      <!-- Cargar el widget -->
+      <script
+         src="../dist/booking-widget.umd.cjs"
+         data-tenant="hotel-luna"
+         data-language="es"
+         data-primary="#0EA5E9"
+      ></script>
+
+      <script>
+         // Inicializar el widget
+         document.addEventListener('DOMContentLoaded', function () {
+            if (typeof BookingWidget !== 'undefined') {
+               BookingWidget.mountWidget('#booking-widget', {});
+            } else {
+               // Fallback si el widget no se carga
+               document.getElementById('booking-widget').innerHTML = `
+                    <div style="padding: 2rem; text-align: center; border: 2px dashed #e5e7eb; border-radius: 8px; color: #6b7280;">
+                        <p><strong>⚠️ Widget no disponible</strong></p>
+                        <p>Asegúrate de que el backend esté ejecutándose en <code>http://localhost:3000</code></p>
+                        <p>Y que el widget esté compilado en <code>../dist/booking-widget.js</code></p>
+                    </div>
+                `;
+            }
+         });
+
+         // Función para cambiar el color del widget
+         function changeColor(color) {
+            // Aplicar el color inmediatamente via CSS variables
+            document.documentElement.style.setProperty(
+               '--color-primary',
+               color
+            );
+
+            // Actualizar el atributo del script para futuras cargas
+            const script = document.querySelector(
+               'script[src*="booking-widget"]'
+            );
+            if (script) {
+               script.setAttribute('data-primary', color);
+            }
+
+            // Reinicializar el widget con el nuevo color
+            const widgetContainer = document.getElementById('booking-widget');
+            if (widgetContainer && typeof BookingWidget !== 'undefined') {
+               widgetContainer.innerHTML = '';
+               BookingWidget.mountWidget('#booking-widget', {
+                  primaryColor: color,
+               });
+            }
+         }
+
+         // Función para cambiar el idioma
+         function changeLanguage(lang) {
+            const script = document.querySelector(
+               'script[src*="booking-widget"]'
+            );
+            if (script) {
+               script.setAttribute('data-language', lang);
+            }
+
+            // Reinicializar widget
+            const widgetContainer = document.getElementById('booking-widget');
+            if (widgetContainer && typeof BookingWidget !== 'undefined') {
+               widgetContainer.innerHTML = '';
+               BookingWidget.mountWidget('#booking-widget', {
+                  language: lang,
+               });
+            }
+         }
+      </script>
+   </body>
+</html>

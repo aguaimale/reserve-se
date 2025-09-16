@@ -138,12 +138,17 @@ export const bookingListQuerySchema = z.object({
       .string()
       .regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)')
       .optional(),
-   customer_email: z.string().email().optional(),
+   customer_email: z.string().optional(),
+   customer_name: z.string().optional(),
+   locator: z.string().optional(),
 });
 
 // Booking update schema
 export const updateBookingSchema = z.object({
-   status: z.enum(['cancelled'], 'Only cancellation is supported'),
+   status: z.enum(['pending', 'confirmed', 'cancelled'], {
+      errorMap: () => ({ message: 'Invalid status' }),
+   }),
+   cancellation_reason: z.string().optional(),
 });
 
 // Pagination schema
@@ -179,3 +184,17 @@ export type BulkInventoryUpsertRequest = z.infer<
 export type BookingListQuery = z.infer<typeof bookingListQuerySchema>;
 export type UpdateBookingRequest = z.infer<typeof updateBookingSchema>;
 export type PaginationQuery = z.infer<typeof paginationQuerySchema>;
+
+// Tenant schemas
+export const updateTenantSchema = z.object({
+   name: z.string().min(1, 'Tenant name is required').optional(),
+   brand_primary: z
+      .string()
+      .regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid hex color format')
+      .optional(),
+   brand_logo: z.string().url('Invalid logo URL').nullable().optional(),
+   currency: z.enum(['ARS', 'USD', 'EUR', 'BRL']).optional(),
+   timezone: z.string().min(1, 'Timezone is required').optional(),
+});
+
+export type UpdateTenantRequest = z.infer<typeof updateTenantSchema>;

@@ -94,11 +94,7 @@ router.get('/availability', async (req: any, res, next) => {
                   is_closed: false,
                },
                include: {
-                  rate_plan: {
-                     where: {
-                        is_active: true,
-                     },
-                  },
+                  rate_plan: true,
                },
             },
          },
@@ -112,12 +108,12 @@ router.get('/availability', async (req: any, res, next) => {
 
       // Process availability
       const availability = roomTypes
-         .map((roomType) => {
+         .map((roomType: any) => {
             // Group inventory by rate plan
             const ratePlanMap = new Map();
 
-            roomType.inventory.forEach((inv) => {
-               if (!inv.rate_plan) return;
+            roomType.inventory.forEach((inv: any) => {
+               if (!inv.rate_plan || !inv.rate_plan.is_active) return;
 
                const key = inv.rate_plan.id;
                if (!ratePlanMap.has(key)) {
@@ -289,6 +285,7 @@ router.post('/bookings/confirm', async (req, res, next) => {
             room_type_id: bookingData.room_type_id,
             rate_plan_id: bookingData.rate_plan_id,
             locator,
+            status: 'pending', // Estado explícito para nuevas reservas
             checkin: checkinDate,
             checkout: checkoutDate,
             guests: bookingData.guests,

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Reserve-SE Widget - Multi-idioma</title>
+      <style>
+         body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+         }
+         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+         }
+         .header {
+            text-align: center;
+            margin-bottom: 40px;
+         }
+         .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+         }
+         .header p {
+            color: #666;
+            font-size: 18px;
+         }
+         .widgets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+         }
+         .widget-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+         }
+         .widget-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+         }
+         .language-selector {
+            text-align: center;
+            margin-bottom: 30px;
+         }
+         .language-selector button {
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+         }
+         .language-selector button:hover {
+            background: #0284c7;
+         }
+         .language-selector button.active {
+            background: #0369a1;
+         }
+         .info {
+            background: #e0f2fe;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+         }
+         .info h3 {
+            margin: 0 0 10px 0;
+            color: #0369a1;
+         }
+         .info p {
+            margin: 0;
+            color: #0c4a6e;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <div class="header">
+            <h1>🏨 Reserve-SE Widget</h1>
+            <p>
+               Demostración de internacionalización - Español, Inglés y
+               Portugués
+            </p>
+         </div>
+
+         <div class="language-selector">
+            <button onclick="changeLanguage('es')" class="active" id="btn-es">
+               🇪🇸 Español
+            </button>
+            <button onclick="changeLanguage('en')" id="btn-en">
+               🇺🇸 English
+            </button>
+            <button onclick="changeLanguage('pt')" id="btn-pt">
+               🇧🇷 Português
+            </button>
+         </div>
+
+         <div class="info">
+            <h3>ℹ️ Información</h3>
+            <p>
+               Este ejemplo muestra cómo el widget se adapta automáticamente al
+               idioma seleccionado. Cambia el idioma usando los botones de
+               arriba para ver la diferencia.
+            </p>
+         </div>
+
+         <div class="widgets-grid">
+            <div class="widget-container">
+               <div class="widget-title">Hotel Luna - Widget Completo</div>
+               <div id="widget-luna"></div>
+            </div>
+
+            <div class="widget-container">
+               <div class="widget-title">Hotel Sol - Widget Completo</div>
+               <div id="widget-sol"></div>
+            </div>
+         </div>
+
+         <div class="info">
+            <h3>🔧 Configuración</h3>
+            <p>
+               Para usar el widget en tu sitio web, simplemente incluye el
+               script con el atributo <code>data-language</code>:
+            </p>
+            <pre><code>&lt;script 
+  src="https://tu-dominio.com/booking-widget.js"
+  data-tenant="hotel-luna"
+  data-language="es"
+  data-primary="#0EA5E9"
+&gt;&lt;/script&gt;
+&lt;div id="booking-widget"&gt;&lt;/div&gt;
+&lt;script&gt;
+  BookingWidget.mountWidget('#booking-widget');
+&lt;/script&gt;</code></pre>
+         </div>
+      </div>
+
+      <!-- Scripts del widget -->
+      <script src="../dist/booking-widget.umd.cjs"></script>
+
+      <script>
+         let currentLanguage = 'es';
+         let lunaWidget = null;
+         let solWidget = null;
+
+         // Función para cambiar idioma
+         function changeLanguage(language) {
+            currentLanguage = language;
+
+            // Actualizar botones activos
+            document
+               .querySelectorAll('.language-selector button')
+               .forEach((btn) => {
+                  btn.classList.remove('active');
+               });
+            document.getElementById(`btn-${language}`).classList.add('active');
+
+            // Remontar widgets con nuevo idioma
+            mountWidgets();
+         }
+
+         // Función para montar widgets
+         function mountWidgets() {
+            // Limpiar widgets existentes
+            if (lunaWidget) {
+               lunaWidget.unmount();
+            }
+            if (solWidget) {
+               solWidget.unmount();
+            }
+
+            // Montar widget Hotel Luna
+            lunaWidget = BookingWidget.mountWidget('#widget-luna', {
+               tenant: 'hotel-luna',
+               language: currentLanguage,
+               primaryColor: '#0EA5E9',
+            });
+
+            // Montar widget Hotel Sol
+            solWidget = BookingWidget.mountWidget('#widget-sol', {
+               tenant: 'hotel-sol',
+               language: currentLanguage,
+               primaryColor: '#10B981',
+            });
+         }
+
+         // Montar widgets iniciales
+         document.addEventListener('DOMContentLoaded', () => {
+            mountWidgets();
+         });
+      </script>
+   </body>
+</html>

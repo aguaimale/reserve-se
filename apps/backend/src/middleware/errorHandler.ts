@@ -39,7 +39,7 @@ export const errorHandler = (
    }
 
    // Programming errors
-   res.status(500).json({
+   return res.status(500).json({
       error: 'Internal server error',
    });
 };

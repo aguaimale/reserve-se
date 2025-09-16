@@ -111,23 +111,24 @@ model Inventory {
 }
 
 model Booking {
-  id             String   @id @default(uuid()) @db.Uuid
-  tenant_id      String   @db.Uuid
-  room_type_id   String   @db.Uuid
-  rate_plan_id   String   @db.Uuid
-  locator        String   @unique
-  status         String   @default("confirmed") // confirmed, cancelled
-  checkin        DateTime @db.Date
-  checkout       DateTime @db.Date
-  guests         Int      @default(1)
-  total_cents    Int      @default(0)
-  currency       String   @default("ARS")
-  customer_name  String
-  customer_email String
-  customer_phone String?
-  notes          String?
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+  id                   String   @id @default(uuid()) @db.Uuid
+  tenant_id            String   @db.Uuid
+  room_type_id         String   @db.Uuid
+  rate_plan_id         String   @db.Uuid
+  locator              String   @unique
+  status               String   @default("pending") // pending, confirmed, cancelled
+  checkin              DateTime @db.Date
+  checkout             DateTime @db.Date
+  guests               Int      @default(1)
+  total_cents          Int      @default(0)
+  currency             String   @default("ARS")
+  customer_name        String
+  customer_email       String
+  customer_phone       String?
+  notes                String?
+  cancellation_reason  String?
+  created_at           DateTime @default(now())
+  updated_at           DateTime @updatedAt
 
   // Relations
   tenant    Tenant   @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
