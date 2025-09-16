@@ -1,0 +1,36 @@
+{
+   "name": "reserve-se",
+   "version": "1.0.0",
+   "description": "Sistema híbrido de reservas hoteleras - Widget embebible + Vistas dedicadas",
+   "private": true,
+   "scripts": {
+      "dev": "concurrently \"npm run dev:backend\" \"npm run dev:admin\" \"npm run dev:widget\" \"npm run dev:public\"",
+      "dev:backend": "cd apps/backend && npm run dev",
+      "dev:admin": "cd apps/admin-frontend && npm run dev",
+      "dev:widget": "cd apps/widget && npm run dev",
+      "dev:public": "cd apps/public-frontend && npm run dev",
+      "build": "npm run build:all",
+      "build:all": "npm run build:backend && npm run build:admin && npm run build:widget && npm run build:public",
+      "build:backend": "cd apps/backend && npm run build",
+      "build:admin": "cd apps/admin-frontend && npm run build",
+      "build:widget": "cd apps/widget && npm run build",
+      "build:public": "cd apps/public-frontend && npm run build",
+      "install:all": "npm install && cd apps/backend && npm install && cd ../admin-frontend && npm install && cd ../widget && npm install && cd ../public-frontend && npm install",
+      "start": "cd apps/backend && npm start",
+      "test": "cd apps/backend && npm test"
+   },
+   "keywords": [
+      "hotel",
+      "booking",
+      "widget",
+      "vue",
+      "express",
+      "prisma",
+      "postgresql"
+   ],
+   "author": "Reserve-SE",
+   "license": "MIT",
+   "devDependencies": {
+      "concurrently": "^8.2.2"
+   }
+}

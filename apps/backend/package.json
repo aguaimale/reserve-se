@@ -6,6 +6,8 @@
    "scripts": {
       "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
       "build": "tsc",
+      "build:public": "cd ../public-frontend && npm install && npm run build",
+      "build:all": "npm run build:public && npm run build",
       "start": "node dist/index.js",
       "test": "vitest",
       "test:watch": "vitest --watch",

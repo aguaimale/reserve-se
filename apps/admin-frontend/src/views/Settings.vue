@@ -301,6 +301,133 @@
          </template>
       </Card>
 
+      <!-- Widget Integration -->
+      <Card>
+         <template #title>
+            <div class="flex items-center space-x-2">
+               <i class="pi pi-code text-blue-600"></i>
+               <h3 class="text-lg font-semibold">📋 Cómo integrar</h3>
+            </div>
+         </template>
+         <template #content>
+            <div class="space-y-6">
+               <p class="text-gray-600">
+                  Para integrar el widget en tu sitio web, sigue estos pasos:
+               </p>
+
+               <!-- Paso 1: Incluir script -->
+               <div class="space-y-3">
+                  <h4 class="font-semibold text-gray-900">
+                     1. Incluir el script
+                  </h4>
+                  <div
+                     class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto"
+                  >
+                     <pre><code>&lt;script 
+   src="https://reserve-se.com/dist/booking-widget.umd.cjs" 
+   data-tenant="{{ user?.tenant.slug }}" 
+   data-language="{{ selectedLanguage }}" 
+   data-primary="{{ tenantForm.brand_primary }}"&gt;
+&lt;/script&gt;</code></pre>
+                  </div>
+                  <Button
+                     icon="pi pi-copy"
+                     label="Copiar código"
+                     class="p-button-sm p-button-outlined"
+                     @click="copyToClipboard('script')"
+                  />
+               </div>
+
+               <!-- Paso 2: Crear contenedor -->
+               <div class="space-y-3">
+                  <h4 class="font-semibold text-gray-900">
+                     2. Crear el contenedor
+                  </h4>
+                  <div
+                     class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto"
+                  >
+                     <pre><code>&lt;div id="booking-widget"&gt;&lt;/div&gt;</code></pre>
+                  </div>
+                  <Button
+                     icon="pi pi-copy"
+                     label="Copiar código"
+                     class="p-button-sm p-button-outlined"
+                     @click="copyToClipboard('container')"
+                  />
+               </div>
+
+               <!-- Paso 3: Inicializar -->
+               <div class="space-y-3">
+                  <h4 class="font-semibold text-gray-900">
+                     3. Inicializar el widget
+                  </h4>
+                  <div
+                     class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto"
+                  >
+                     <pre><code>&lt;script&gt;
+   BookingWidget.mountWidget('#booking-widget', {
+      // Opciones adicionales (opcional)
+   });
+&lt;/script&gt;</code></pre>
+                  </div>
+                  <Button
+                     icon="pi pi-copy"
+                     label="Copiar código"
+                     class="p-button-sm p-button-outlined"
+                     @click="copyToClipboard('init')"
+                  />
+               </div>
+
+               <!-- Vista dedicada -->
+               <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div class="flex items-center space-x-2 mb-2">
+                     <i class="pi pi-globe text-blue-600"></i>
+                     <h4 class="font-semibold text-blue-900">Vista Dedicada</h4>
+                  </div>
+                  <p class="text-blue-800 text-sm mb-3">
+                     También tienes disponible una vista dedicada optimizada
+                     para SEO:
+                  </p>
+                  <div
+                     class="bg-white border border-blue-300 p-3 rounded font-mono text-sm"
+                  >
+                     <a
+                        :href="'https://reserve-se.com/' + user?.tenant.slug"
+                        target="_blank"
+                        class="text-blue-600 hover:text-blue-800 underline"
+                     >
+                        https://reserve-se.com/{{ user?.tenant.slug }}
+                     </a>
+                  </div>
+                  <Button
+                     icon="pi pi-external-link"
+                     label="Ver vista dedicada"
+                     class="p-button-sm p-button-outlined mt-2"
+                     @click="openDedicatedView"
+                  />
+               </div>
+
+               <!-- Documentación -->
+               <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                  <div class="flex items-center space-x-2 mb-2">
+                     <i class="pi pi-book text-gray-600"></i>
+                     <h4 class="font-semibold text-gray-900">Documentación</h4>
+                  </div>
+                  <p class="text-gray-700 text-sm mb-3">
+                     Para más información sobre personalización y opciones
+                     avanzadas:
+                  </p>
+                  <Button
+                     icon="pi pi-external-link"
+                     label="Ver documentación completa"
+                     class="p-button-sm p-button-outlined"
+                     @click="openDocumentation"
+                  />
+               </div>
+            </div>
+         </template>
+      </Card>
+
       <!-- Danger Zone -->
       <Card>
          <template #title>
@@ -336,7 +463,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useToast } from 'primevue/usetoast';
 import { useConfirm } from 'primevue/useconfirm';
@@ -714,6 +841,63 @@ watch(
       }
    }
 );
+
+// Funciones para la sección de integración
+const copyToClipboard = async (type: string) => {
+   let text = '';
+
+   if (type === 'script') {
+      const tenant = user.value?.tenant.slug || '';
+      const language = selectedLanguage.value || 'es';
+      const color = tenantForm.value.brand_primary || '#0EA5E9';
+      text =
+         '<' +
+         'script src="https://reserve-se.com/dist/booking-widget.umd.cjs" data-tenant="' +
+         tenant +
+         '" data-language="' +
+         language +
+         '" data-primary="' +
+         color +
+         '"></' +
+         'script>';
+   } else if (type === 'container') {
+      text = '<div id="booking-widget"></div>';
+   } else if (type === 'init') {
+      text =
+         '<' +
+         'script>// El widget se inicializa automáticamente al cargar el script</' +
+         'script>';
+   }
+
+   try {
+      await navigator.clipboard.writeText(text);
+      toast.add({
+         severity: 'success',
+         summary: 'Copiado',
+         detail: 'Código copiado al portapapeles',
+         life: 2000,
+      });
+   } catch (err) {
+      console.error('Error copying to clipboard:', err);
+      toast.add({
+         severity: 'error',
+         summary: 'Error',
+         detail: 'No se pudo copiar al portapapeles',
+         life: 3000,
+      });
+   }
+};
+
+const openDedicatedView = () => {
+   const url = `https://reserve-se.com/${user.value?.tenant.slug}`;
+   window.open(url, '_blank');
+};
+
+const openDocumentation = () => {
+   // Por ahora abrimos el README del widget
+   const url = 'https://github.com/aguaimale/reserve-se/tree/main/apps/widget';
+   window.open(url, '_blank');
+};
 
 onMounted(() => {
    initializeForms();

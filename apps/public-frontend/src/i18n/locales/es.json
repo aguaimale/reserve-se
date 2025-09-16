@@ -1,0 +1,46 @@
+{
+   "common": {
+      "loading": "Cargando...",
+      "error": "Error",
+      "retry": "Reintentar",
+      "contact": "Contacto",
+      "location": "Ubicación",
+      "services": "Servicios",
+      "about": "Sobre Nosotros",
+      "booking": "Reserva",
+      "bookNow": "Reservar Ahora"
+   },
+   "hotel": {
+      "title": "Hotel - Reserve-SE",
+      "description": "Reserva tu habitación online",
+      "facilities": "Nuestras Instalaciones",
+      "aboutUs": "Sobre Nosotros",
+      "services": "Servicios",
+      "location": "Ubicación",
+      "viewOnMaps": "Ver en Google Maps",
+      "bookingTitle": "Reserva tu Habitación",
+      "bookingSubtitle": "Encuentra la mejor tarifa para tu estadía",
+      "loadingBooking": "Cargando sistema de reservas...",
+      "bookingError": "No se pudo cargar el sistema de reservas"
+   },
+   "features": {
+      "secure": "Reserva Segura",
+      "secureDesc": "Protegemos tu información personal y de pago",
+      "available": "Disponible 24/7",
+      "availableDesc": "Reserva en cualquier momento del día",
+      "support": "Soporte",
+      "supportDesc": "Estamos aquí para ayudarte"
+   },
+   "footer": {
+      "contact": "Contacto",
+      "reserveSe": "Reserve-SE",
+      "reserveSeDesc": "Sistema de reservas hoteleras",
+      "copyright": "Todos los derechos reservados."
+   },
+   "notFound": {
+      "title": "404 - Hotel no encontrado",
+      "message": "Lo sentimos, no pudimos encontrar el hotel que buscas. Verifica la URL o regresa a la página principal.",
+      "goToLuna": "Ir a Hotel Luna",
+      "goToSol": "Ir a Hotel Sol"
+   }
+}

@@ -44,9 +44,9 @@ import { useAuthStore } from '@/stores/auth';
 import { useToast } from 'primevue/usetoast';
 import { useI18n } from '@/composables/useI18n';
 
-const emit = defineEmits<{
-   'toggle-sidebar': [];
-}>();
+// const emit = defineEmits<{
+//    'toggle-sidebar': [];
+// }>();
 
 const router = useRouter();
 const authStore = useAuthStore();

@@ -1,0 +1,43 @@
+{
+   "name": "@reserve-se/public-frontend",
+   "private": true,
+   "version": "1.0.0",
+   "description": "Vistas dedicadas para hoteles - Sistema híbrido Reserve-SE",
+   "type": "module",
+   "scripts": {
+      "dev": "vite",
+      "build": "vue-tsc -b && vite build",
+      "preview": "vite preview"
+   },
+   "dependencies": {
+      "@primeuix/themes": "^1.2.3",
+      "axios": "^1.12.2",
+      "pinia": "^3.0.3",
+      "primeicons": "^7.0.0",
+      "primevue": "^4.3.9",
+      "tailwindcss": "^3.4.15",
+      "vue": "^3.5.18",
+      "vue-i18n": "^9.14.5",
+      "vue-router": "^4.5.1"
+   },
+   "devDependencies": {
+      "@types/node": "^24.5.0",
+      "@vitejs/plugin-vue": "^6.0.1",
+      "@vue/tsconfig": "^0.7.0",
+      "autoprefixer": "^10.4.21",
+      "postcss": "^8.5.6",
+      "typescript": "~5.8.3",
+      "vite": "^7.1.2",
+      "vue-tsc": "^3.0.5"
+   },
+   "keywords": [
+      "hotel",
+      "booking",
+      "public",
+      "vue",
+      "primevue",
+      "seo"
+   ],
+   "author": "Reserve-SE",
+   "license": "MIT"
+}

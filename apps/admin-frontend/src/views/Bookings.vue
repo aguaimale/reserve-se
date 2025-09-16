@@ -546,7 +546,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useToast } from 'primevue/usetoast';
-import { useConfirm } from 'primevue/useconfirm';
+// import { useConfirm } from 'primevue/useconfirm';
 import { useI18n } from '@/composables/useI18n';
 import api from '@/services/api';
 
@@ -574,7 +574,7 @@ interface Booking {
 }
 
 const toast = useToast();
-const confirm = useConfirm();
+// const confirm = useConfirm();
 const { t } = useI18n();
 
 const bookings = ref<Booking[]>([]);
